@@ -1,0 +1,116 @@
+# =========================
+# 🔧 Build & Output
+# =========================
+bin/
+obj/
+out/
+publish/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+
+# =========================
+# 🅰️ Angular / Node.js
+# =========================
+node_modules/
+dist/
+.angular/
+out-tsc/
+.npm/
+npm-debug.log
+npm-debug.log.*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# 🧠 Visual Studio
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# 💻 VS Code
+# =========================
+.vscode/
+.history/
+
+# =========================
+# 🧪 Rider / JetBrains
+# =========================
+.idea/
+*.sln.iml
+
+# =========================
+# 📦 NuGet
+# =========================
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+
+# =========================
+# 🔐 Secrets / Config
+# =========================
+secrets.json
+.env
+.env.*
+
+# =========================
+# 🐳 Docker
+# =========================
+docker-compose.override.yml
+
+# =========================
+# 🗄 Entity Framework / DB
+# =========================
+# Lưu ý: KHÔNG ignore thư mục Migrations/
+*.db
+*.sqlite
+*.sqlite3
+*.mdf
+*.ldf
+
+# =========================
+# 📊 Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# 📁 OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 📦 Publish profiles
+# =========================
+Properties/PublishProfiles/
+
+# =========================
+# 🧪 Test Results & Coverage
+# =========================
+TestResults/
+*.trx
+coverage/
+*.coverage
+*.coveragexml
+
+# =========================
+# 🔑 Certificates
+# =========================
+*.pfx
+*.key
+*.crt
+
+# =========================
+# 🔄 Backup / temp
+# =========================
+*.bak
+*.tmp
+*.temp
