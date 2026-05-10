@@ -17,7 +17,7 @@ public sealed partial record Username
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("Tên không được để trống.", nameof(value));
+            throw new ArgumentException("Username cannot be null or whitespace.", nameof(value));
         }
 
         // Chuẩn hóa: Cắt khoảng trắng 2 đầu và đưa các khoảng trắng ở giữa về 1 dấu cách duy nhất
@@ -26,7 +26,7 @@ public sealed partial record Username
         // Kiểm tra Regex: Không số, không ký tự đặc biệt, ít nhất 2 từ
         if (!UsernameRegex().IsMatch(value))
         {
-            throw new ArgumentException("Tên không hợp lệ. Chỉ được chứa chữ cái và phải có ít nhất 2 từ.", nameof(value));
+            throw new ArgumentException("Username is invalid. It must contain only letters and have at least 2 words.", nameof(value));
         }
 
         Value = value;

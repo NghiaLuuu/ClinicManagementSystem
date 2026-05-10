@@ -74,20 +74,30 @@ public class User : AuditableEntity
     // ========================
     public void ChangePassword(PasswordHash newPasswordHash, Guid updatedBy)
     {
+        if (IsActive == false)
+        {
+            throw new InvalidOperationException("Cannot change password of an inactive user.");
+        }
+
         if (newPasswordHash == null)
         {
             throw new ArgumentNullException(nameof(newPasswordHash));
         }
 
+        if (newPasswordHash.Value == PasswordHash.Value) 
+        {
+            return; // Nếu mật khẩu mới giống mật khẩu cũ thì không cần làm gì cả
+        }
+
         PasswordHash = newPasswordHash;
-        Touch(updatedBy); // Hàm Touch có sẵn từ class Cha (AuditableEntity)
+        Touch(updatedBy);
     }
 
     public void ChangeRole(UserRole newRole, Guid updatedBy)
     {
         if (IsActive == false)
         {
-            throw new InvalidOperationException("Không thể đổi Role cho User đang bị khóa.");
+            throw new InvalidOperationException("Cannot change role of an inactive user.");
         }
 
         if (Role == newRole) 
@@ -97,7 +107,7 @@ public class User : AuditableEntity
 
         if (newRole != UserRole.Patient && newRole != UserRole.Dentist)
         {
-            throw new ArgumentException("Role không hợp lệ.");
+            throw new ArgumentException("Role is invalid.");
         }
 
         Role = newRole;

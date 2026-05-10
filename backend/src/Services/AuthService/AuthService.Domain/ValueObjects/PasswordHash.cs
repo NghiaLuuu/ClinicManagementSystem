@@ -1,25 +1,28 @@
-namespace AuthService.Domain.ValueObjects;
-using System;
-
-public sealed record PasswordHash
+public sealed partial record PasswordHash
 {
     public string Value { get; }
 
-    private PasswordHash() { Value = null!; }
-
-    public PasswordHash(string hashValue)
+    private PasswordHash(string value)
     {
-        // Chuỗi Hash do hệ thống sinh ra thì chỉ cần không rỗng là được
-        if (string.IsNullOrWhiteSpace(hashValue))
-        {
-            throw new ArgumentException("Mã băm mật khẩu không được để trống.", nameof(hashValue));
-        }
-
-        Value = hashValue;
+        Value = value;
     }
 
-    public override string ToString()
-    { 
-        return Value; 
+    public static PasswordHash Create(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException(
+                "Password hash không được rỗng."
+            );
+        }
+
+        if (value.Contains(" "))
+        {
+            throw new ArgumentException(
+                "Password hash không được chứa khoảng trắng."
+            );
+        }
+
+        return new PasswordHash(value);
     }
 }
