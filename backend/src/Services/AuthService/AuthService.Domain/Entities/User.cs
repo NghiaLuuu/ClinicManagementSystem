@@ -4,12 +4,13 @@ using System;
 using AuthService.Domain.ValueObjects;
 using AuthService.Domain.Events;
 using AuthService.Domain.Common;
+using AuthService.Domain.Enums;
 
 public class User : AuditableEntity 
 {
-    public string Username { get; private set; }
+    public Username Username { get; private set; }
     public Email Email { get; private set; }
-    public string PasswordHash { get; private set; }
+    public PasswordHash PasswordHash { get; private set; }
     public UserRole Role { get; private set; }
     public bool IsActive { get; private set; }
 
@@ -27,20 +28,20 @@ public class User : AuditableEntity
     // 2. Private constructor
     // ========================
     // Gọi : base(createdBy) để class Cha (AuditableEntity) khởi tạo Id và thời gian trước
-    private User(string username, Email email, string passwordHash, UserRole role, Guid createdBy) : base(createdBy) 
+    private User(Username username, Email email, PasswordHash passwordHash, UserRole role, Guid createdBy) : base(createdBy) 
     {
-        if (string.IsNullOrWhiteSpace(username))
+        if (username == null)
         {
-            throw new ArgumentException("Username không được để trống.", nameof(username));
+            throw new ArgumentNullException(nameof(username));
         }
 
-        if (string.IsNullOrWhiteSpace(passwordHash))
+        if (passwordHash == null)
         {
-            throw new ArgumentException("Password không được để trống.", nameof(passwordHash));
+            throw new ArgumentNullException(nameof(passwordHash));
         }
 
         // Gán dữ liệu sau khi đã kiểm tra an toàn
-        Username = username.Trim().ToLowerInvariant();
+        Username = username;
         Email = email;
         PasswordHash = passwordHash;
         Role = role;
@@ -50,20 +51,20 @@ public class User : AuditableEntity
     // ========================
     // 3. FACTORY METHODS (Nơi tạo object)
     // ========================
-    public static User CreatePatient(string username, string email, string passwordHash, Guid createdBy)
+    public static User CreatePatient(Username username, Email email, PasswordHash passwordHash, Guid createdBy)
     {
-        var user = new User(username, new Email(email), passwordHash, UserRole.Patient, createdBy);
+        var user = new User(username, email, passwordHash, UserRole.Patient, createdBy);
         
-        user.AddDomainEvent(new UserRegisteredEvent(user.Id, user.Email, user.Role));
+        user.AddDomainEvent(new UserRegisteredEvent(user.Id, user.Email, UserRole.Patient));
         
         return user;
     }
 
-    public static User CreateDentist(string username, string email, string passwordHash, Guid createdBy)
+    public static User CreateDentist(Username username, Email email, PasswordHash passwordHash, Guid createdBy)
     {
-        var user = new User(username, new Email(email), passwordHash, UserRole.Dentist, createdBy);
+        var user = new User(username, email, passwordHash, UserRole.Dentist, createdBy);
         
-        user.AddDomainEvent(new UserRegisteredEvent(user.Id, user.Email, user.Role));
+        user.AddDomainEvent(new UserRegisteredEvent(user.Id, user.Email, UserRole.Dentist));
         
         return user;
     }
@@ -71,11 +72,11 @@ public class User : AuditableEntity
     // ========================
     // 4. BEHAVIOR (Hành động của User)
     // ========================
-    public void ChangePassword(string newPasswordHash, Guid updatedBy)
+    public void ChangePassword(PasswordHash newPasswordHash, Guid updatedBy)
     {
-        if (string.IsNullOrWhiteSpace(newPasswordHash))
+        if (newPasswordHash == null)
         {
-            throw new ArgumentException("Password mới không được để trống.");
+            throw new ArgumentNullException(nameof(newPasswordHash));
         }
 
         PasswordHash = newPasswordHash;
