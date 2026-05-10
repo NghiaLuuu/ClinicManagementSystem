@@ -17,13 +17,18 @@ public sealed partial record Email
     public Email(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Email is required.", nameof(value));
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(value);
+        }
 
         // Chuẩn hóa chuỗi TRƯỚC khi validate
         value = value.Trim().ToLowerInvariant();
 
         if (!EmailRegex().IsMatch(value))
+        {
             throw new ArgumentException($"Invalid email format: {value}", nameof(value));
+        }
+            
 
         Value = value;
     }
