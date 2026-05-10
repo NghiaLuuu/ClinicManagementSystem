@@ -12,14 +12,14 @@ public sealed partial record PasswordHash
         if (string.IsNullOrWhiteSpace(value))
         {
             throw new ArgumentException(
-                "Password hash không được rỗng."
+                "Password hash cannot be null or whitespace."
             );
         }
 
         if (value.Contains(" "))
         {
             throw new ArgumentException(
-                "Password hash không được chứa khoảng trắng."
+                "Password hash cannot contain whitespace."
             );
         }
 

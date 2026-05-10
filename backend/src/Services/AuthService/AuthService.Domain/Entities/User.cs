@@ -74,21 +74,7 @@ public class User : AuditableEntity
     // ========================
     public void ChangePassword(PasswordHash newPasswordHash, Guid updatedBy)
     {
-        if (IsActive == false)
-        {
-            throw new InvalidOperationException("Cannot change password of an inactive user.");
-        }
-
-        if (newPasswordHash == null)
-        {
-            throw new ArgumentNullException(nameof(newPasswordHash));
-        }
-
-        if (newPasswordHash.Value == PasswordHash.Value) 
-        {
-            return; // Nếu mật khẩu mới giống mật khẩu cũ thì không cần làm gì cả
-        }
-
+        ArgumentNullException.ThrowIfNull(newPasswordHash);
         PasswordHash = newPasswordHash;
         Touch(updatedBy);
     }
