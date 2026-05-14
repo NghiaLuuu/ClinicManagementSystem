@@ -19,7 +19,7 @@ public abstract class AuditableEntity
     // ========================
     // 🔥 DOMAIN EVENTS
     // ========================
-    private readonly List<IDomainEvent> _domainEvents = new();
+    private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
     
     // Chỉ expose IReadOnlyCollection ra ngoài để không ai được Add() bừa bãi
     public IReadOnlyCollection<IDomainEvent> DomainEvents
