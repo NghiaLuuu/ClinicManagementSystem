@@ -13,7 +13,12 @@ public sealed partial record Username
         Value = null!;
     }
 
-    public Username(string value)
+    public static Username Create(string value)
+    {
+        return new Username(value);
+    }
+
+    private Username(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {

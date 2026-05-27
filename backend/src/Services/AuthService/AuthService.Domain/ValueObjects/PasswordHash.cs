@@ -1,13 +1,16 @@
-public sealed partial record PasswordHash
+namespace AuthService.Domain.ValueObjects;
+
+public sealed record PasswordHash
 {
     public string Value { get; }
 
-    private PasswordHash(string value)
+    // Dành cho EF Core
+    private PasswordHash()
     {
-        Value = value;
+        Value = null!;
     }
 
-    public static PasswordHash Create(string value)
+    private PasswordHash(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -16,13 +19,23 @@ public sealed partial record PasswordHash
             );
         }
 
-        if (value.Contains(" "))
+        if (value.Contains(' '))
         {
             throw new ArgumentException(
                 "Password hash cannot contain whitespace."
             );
         }
 
+        Value = value;
+    }
+
+    public static PasswordHash Create(string value)
+    {
         return new PasswordHash(value);
+    }
+
+    public override string ToString()
+    {
+        return Value;
     }
 }

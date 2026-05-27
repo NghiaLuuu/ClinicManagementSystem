@@ -14,12 +14,14 @@ public sealed partial record Email
         Value = null!;
     }
 
-    public Email(string value)
+    public static Email Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            ArgumentException.ThrowIfNullOrWhiteSpace(value);
-        }
+        return new Email(value);
+    }
+
+    private Email(string value)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(value);
 
         // Chuẩn hóa chuỗi TRƯỚC khi validate
         value = value.Trim().ToLowerInvariant();
