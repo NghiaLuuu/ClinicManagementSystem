@@ -9,9 +9,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<RegisterPatientUseCase>();
-        services.AddScoped<RegisterDentistUseCase>();
-        services.AddScoped<LoginUseCase>();
+        services.AddScoped<IRegisterPatientUseCase, RegisterPatientUseCase>();
+        services.AddScoped<IRegisterDentistUseCase, RegisterDentistUseCase>();
+        services.AddScoped<ILoginUseCase, LoginUseCase>();
 
         return services;
     }

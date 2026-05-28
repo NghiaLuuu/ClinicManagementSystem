@@ -7,7 +7,7 @@ using AuthService.Domain.Interfaces;
 using AuthService.Domain.Repositories;
 using AuthService.Domain.ValueObjects;
 
-public sealed class LoginUseCase : IUseCase<LoginRequest, AuthResponse>
+public sealed class LoginUseCase : ILoginUseCase
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
@@ -22,7 +22,7 @@ public sealed class LoginUseCase : IUseCase<LoginRequest, AuthResponse>
     {
         var email = Email.Create(request.Email);
 
-        var user = await _userRepository.GetByEmailAsync(email.Value);
+        var user = await _userRepository.GetByEmailAsync(email);
         if (user is null || user.IsActive == false)
             throw new UnauthorizedException("Invalid credentials.");
 

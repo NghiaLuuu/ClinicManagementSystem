@@ -18,11 +18,8 @@ public sealed class UserRepository : IUserRepository
     public Task<User?> GetByIdAsync(Guid id)
         => _db.Users.FirstOrDefaultAsync(x => x.Id == id);
 
-    public Task<User?> GetByEmailAsync(string email)
-    {
-        var emailVo = Email.Create(email);
-        return _db.Users.FirstOrDefaultAsync(x => x.Email == emailVo);
-    }
+    public Task<User?> GetByEmailAsync(Email email)
+        => _db.Users.FirstOrDefaultAsync(x => x.Email == email);
 
     public async Task AddAsync(User user)
     {

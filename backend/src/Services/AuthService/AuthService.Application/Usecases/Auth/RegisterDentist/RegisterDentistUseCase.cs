@@ -8,7 +8,7 @@ using AuthService.Domain.Interfaces;
 using AuthService.Domain.Repositories;
 using AuthService.Domain.ValueObjects;
 
-public sealed class RegisterDentistUseCase : IUseCase<RegisterRequest, AuthResponse>
+public sealed class RegisterDentistUseCase : IRegisterDentistUseCase
 {
     private static readonly Guid SystemUserId = Guid.Empty;
 
@@ -26,7 +26,7 @@ public sealed class RegisterDentistUseCase : IUseCase<RegisterRequest, AuthRespo
         var username = Username.Create(request.Username);
         var email = Email.Create(request.Email);
 
-        var existing = await _userRepository.GetByEmailAsync(email.Value);
+        var existing = await _userRepository.GetByEmailAsync(email);
         if (existing is not null)
             throw new ConflictException("Email already exists.");
 
