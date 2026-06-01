@@ -26,7 +26,6 @@ public abstract class AuditableEntity
     {
         get
         {
-            // Trả về một bản sao của danh sách sự kiện để đảm bảo tính bất biến
             return _domainEvents.AsReadOnly();
         }
     }
